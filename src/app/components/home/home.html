@@ -15,19 +15,23 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Campo Fecha -->
+      <!-- Campo Fecha con calendario -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Fecha</mat-label>
-        <input matInput type="date" formControlName="fecha" [min]="today" />
+        <input matInput [matDatepicker]="picker" formControlName="fecha" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker [startAt]="todayDate"></mat-datepicker>
         <mat-error *ngIf="form.get('fecha')?.hasError('required')">
           La fecha es obligatoria.
         </mat-error>
       </mat-form-field>
 
-      <!-- Campo Hora -->
+      <!-- Campo Hora con selector -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Hora</mat-label>
-        <input matInput type="time" formControlName="hora" />
+        <mat-select formControlName="hora">
+          <mat-option *ngFor="let h of horas" [value]="h">{{ h }}</mat-option>
+        </mat-select>
         <mat-error *ngIf="form.get('hora')?.hasError('required')">
           La hora es obligatoria.
         </mat-error>
