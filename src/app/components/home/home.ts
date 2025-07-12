@@ -1,4 +1,3 @@
-// src/app/home.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,7 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+
+import { ValidadorService, ValidacionResponse } from '../../../services/validador.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './home.css',
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -30,7 +29,8 @@ export class HomeComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private validadorService: ValidadorService
   ) {
     this.form = this.fb.group({
       placa: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}\d{4}$/)]],
@@ -51,18 +51,15 @@ export class HomeComponent {
       return;
     }
 
-    // TEMP: Solo mostrar datos en consola por ahora
-    console.log('Datos listos para enviar:', { placa, fecha, hora });
-
-    // Aquí luego llamaremos al servicio
-    // this.validadorService.validar(...)
-
-    // Navegación simulada
-    this.router.navigate(['/resultado'], {
-      state: {
-        data: {
-          mensaje: `Simulación: El carro ${placa} puede circular el ${fecha} a las ${hora}`
-        }
+    this.validadorService.validar({ placa, fecha, hora }).subscribe({
+      next: (respuesta: ValidacionResponse) => {
+        this.router.navigate(['/resultado'], {
+          state: { data: respuesta }
+        });
+      },
+      error: (err) => {
+        alert('Error al comunicarse con el servidor.');
+        console.error(err);
       }
     });
   }
