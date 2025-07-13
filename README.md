@@ -9,7 +9,7 @@ Este es el frontend en Angular 20 para el sistema de validación de Pico y Placa
 ## 🧪 Ejecución en modo desarrollo
 
 ```bash
-git clone https://github.com/tu-usuario/pico-placa-frontend.git
-cd pico-placa-frontend
+git clone https://github.com/godmath04/frontend.git
+cd frontend
 npm install
 ng serve
