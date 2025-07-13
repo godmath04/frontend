@@ -1,10 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { HomeComponent } from './components/home/home';
+import { provideHttpClient } from '@angular/common/http';
+import { ResultadoComponent } from './components/resultado/resultado'; 
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(), provideClientHydration(withEventReplay()),
-    
+    provideHttpClient(), 
+    provideRouter([
+      { path: '', component: HomeComponent },
+      {path: 'resultado', component: ResultadoComponent}
+    ])
   ]
 };

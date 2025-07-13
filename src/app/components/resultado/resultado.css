@@ -1,0 +1,10 @@
+.resultado-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+mat-card {
+  max-width: 500px;
+  width: 100%;
+}
